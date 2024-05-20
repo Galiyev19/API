@@ -8,8 +8,10 @@ import (
 )
 
 type Config struct {
-	Enviroment string `json:"enviroment"`
-	Version    string `json:"version"`
+	StoreDriver   string `json:"store_driver"`
+	MigrationPath string `json:"migration_path"`
+	Enviroment    string `json:"enviroment"`
+	Version       string `json:"version"`
 }
 
 func NewConfig() *Config {

@@ -1,4 +1,6 @@
-{
+{   
+    "store_driver": "postgres",
+    "migration_path": "./migration/migration.sql",
     "enviroment": "development",
     "version": "1.0.0"
 }
