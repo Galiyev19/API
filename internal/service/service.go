@@ -1,13 +1,16 @@
 package service
 
-import "database/sql"
+import (
+	"API/internal/repository"
+	"API/internal/service/user"
+)
 
 type Service struct {
-	db *sql.DB
+	User user.IUserService
 }
 
-func NewService(db *sql.DB) *Service {
+func NewService(r *repository.Repository) *Service {
 	return &Service{
-		db: db,
+		User: user.NewUserService(&r.User),
 	}
 }

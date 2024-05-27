@@ -1,11 +1,11 @@
 package app
 
 import (
-	"fmt"
 	"log"
 
+	"API/internal/api"
 	"API/internal/config"
-	"API/internal/handlers"
+	"API/internal/repository"
 	"API/internal/service"
 	"API/internal/storage"
 )
@@ -17,16 +17,14 @@ func Run() {
 		log.Fatalf("Error: %v", err)
 	}
 
-	connStr := "user=postgres_db password=123456GG dbname=my_db host=localhost port=5432 sslmode=disable"
-
-	db, err := storage.InitDB(cfg.StoreDriver, connStr, cfg.MigrationPath)
+	db, err := storage.CreateSqlDB(cfg.StoreDriverSqlite, cfg.StorePath, cfg.MigrationPath)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
-	s := service.NewService(db)
-	h := handlers.NewHandler(s, cfg)
 
-	router := h.InitRoutes()
+	r := repository.NewRepo(db)
+	s := service.NewService(r)
+	api := api.NewApi(s, cfg)
 
-	router.Run(":8080")
+	api.InitServer()
 }

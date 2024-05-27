@@ -3,15 +3,17 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 )
 
 type Config struct {
-	StoreDriver   string `json:"store_driver"`
-	MigrationPath string `json:"migration_path"`
-	Enviroment    string `json:"enviroment"`
-	Version       string `json:"version"`
+	StoreDriverPostgres string `json:"store_driver_postgres"`
+	StoreDriverSqlite   string `json:"store_driver_sqlite"`
+	MigrationPath       string `json:"migration_path"`
+	StorePath           string `json:"store_path"`
+	Enviroment          string `json:"enviroment"`
+	Version             string `json:"version"`
 }
 
 func NewConfig() *Config {
@@ -25,7 +27,7 @@ func (cfg *Config) InitConfig(cfgPath string, config *Config) error {
 	}
 
 	defer configJson.Close()
-	body, err := ioutil.ReadAll(configJson)
+	body, err := io.ReadAll(configJson)
 	if err != nil {
 		return fmt.Errorf("ERROR: %v", err)
 	}

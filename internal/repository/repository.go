@@ -1,7 +1,17 @@
 package repository
 
-type Repository struct{}
+import (
+	"database/sql"
 
-func NewRepo() *Repository {
-	return &Repository{}
+	"API/internal/repository/user"
+)
+
+type Repository struct {
+	User user.UserRepo
+}
+
+func NewRepo(db *sql.DB) *Repository {
+	return &Repository{
+		User: *user.NewUserRepo(db),
+	}
 }
