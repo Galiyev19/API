@@ -45,7 +45,7 @@ func (h *Api) InitRoutes(r *gin.Engine) {
 		// User
 		user := v1.Group("/users")
 
-		router.User(user)
+		router.User(user, h.service)
 
 	}
 }
