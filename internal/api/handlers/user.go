@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"API/internal/api/dto"
 	"API/internal/api/helpers"
+	"API/internal/api/validator"
 	"API/internal/model"
 	"API/internal/service"
 
@@ -22,11 +22,17 @@ func NewUserHandler(s *service.Service) *UserHandler {
 	}
 }
 
-func (u *UserHandler) SignIn(c *gin.Context) {
+// REGISTER USER ROUTER
+func (u *UserHandler) SignUp(c *gin.Context) {
 	req := new(dto.RegisterUser)
 	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse("Error bind json", false))
+
+	// check valid email and password
+	v := validator.NewValidator()
+	dto.ValidateUser(v, req)
+
+	if err != nil || !v.Valid() {
+		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse(v.Errors, false))
 		return
 	}
 
@@ -34,10 +40,10 @@ func (u *UserHandler) SignIn(c *gin.Context) {
 		Email:    req.Email,
 		Password: req.Password,
 	}
+
 	err = u.service.User.Insert(userModel)
 	if err != nil {
-		fmt.Println("Error: %v", err)
-		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse("Insert into DB", false))
+		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse(err.Error(), false))
 		return
 	}
 	c.JSON(http.StatusCreated, helpers.GenerateResponse("test", true))
