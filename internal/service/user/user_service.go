@@ -18,6 +18,7 @@ func NewUserService(userRepo user.IUserRepo) *UserService {
 
 type IUserService interface {
 	Insert(user model.User) error
+	GetUserByEmail(email string) (model.User, error)
 }
 
 // Create new user
@@ -39,4 +40,13 @@ func (u *UserService) Insert(user model.User) error {
 		return err
 	}
 	return nil
+}
+
+func (u *UserService) GetUserByEmail(email string) (model.User, error) {
+	user, err := u.UserRepo.GetUserByEmail(email)
+	if err != nil {
+		return model.User{}, err
+	}
+
+	return user, err
 }

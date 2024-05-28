@@ -19,6 +19,7 @@ func NewUserRepo(db *sql.DB) *UserRepo {
 
 type IUserRepo interface {
 	Insert(user model.User) error
+	GetUserByEmail(email string) (model.User, error)
 }
 
 func (u *UserRepo) Insert(user model.User) error {
@@ -28,4 +29,13 @@ func (u *UserRepo) Insert(user model.User) error {
 		return fmt.Errorf("insert into db user - %v", err)
 	}
 	return nil
+}
+
+func (u *UserRepo) GetUserByEmail(email string) (model.User, error) {
+	var user model.User
+	stmt := `SELECT * FROM users WHERE email = ?`
+	if err := u.db.QueryRow(stmt, email).Scan(&user.UserId, &user.Email, &user.Password, &user.CreatedAt); err != nil {
+		return model.User{}, fmt.Errorf("NOT FIND USER")
+	}
+	return user, nil
 }

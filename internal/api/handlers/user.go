@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"API/internal/api/dto"
@@ -31,11 +32,17 @@ func (u *UserHandler) SignUp(c *gin.Context) {
 	v := validator.NewValidator()
 	dto.ValidateUser(v, req)
 
-	if err != nil || !v.Valid() {
+	if err != nil && !v.Valid() {
 		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse(v.Errors, false))
 		return
 	}
 
+	existUser, _ := u.service.User.GetUserByEmail(req.Email)
+	fmt.Println("EXIST", existUser.Email, "REQ", req.Email)
+	if existUser.Email == req.Email {
+		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse("This email is exist", false))
+		return
+	}
 	userModel := model.User{
 		Email:    req.Email,
 		Password: req.Password,
@@ -46,5 +53,5 @@ func (u *UserHandler) SignUp(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse(err.Error(), false))
 		return
 	}
-	c.JSON(http.StatusCreated, helpers.GenerateResponse("test", true))
+	c.JSON(http.StatusCreated, helpers.GenerateResponse("SUCESS - user created", true))
 }
