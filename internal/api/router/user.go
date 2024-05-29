@@ -11,4 +11,5 @@ func User(r *gin.RouterGroup, service *service.Service) {
 	h := handlers.NewUserHandler(service)
 
 	r.POST("/sign-up", h.SignUp)
+	r.POST("/sign-in", h.SignIn)
 }

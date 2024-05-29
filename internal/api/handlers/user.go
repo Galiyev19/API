@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"API/internal/api/dto"
@@ -37,12 +36,14 @@ func (u *UserHandler) SignUp(c *gin.Context) {
 		return
 	}
 
+	// check user email is exist in DB
 	existUser, _ := u.service.User.GetUserByEmail(req.Email)
-	fmt.Println("EXIST", existUser.Email, "REQ", req.Email)
+
 	if existUser.Email == req.Email {
 		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse("This email is exist", false))
 		return
 	}
+
 	userModel := model.User{
 		Email:    req.Email,
 		Password: req.Password,
@@ -54,4 +55,33 @@ func (u *UserHandler) SignUp(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusCreated, helpers.GenerateResponse("SUCESS - user created", true))
+}
+
+// LOGIN USER
+
+func (u *UserHandler) SignIn(c *gin.Context) {
+	req := new(dto.RegisterUser)
+	err := c.ShouldBindJSON(&req)
+
+	// check valid email and password
+	v := validator.NewValidator()
+	dto.ValidateUser(v, req)
+
+	// error json data
+	if err != nil && !v.Valid() {
+		c.AbortWithStatusJSON(http.StatusBadRequest, helpers.GenerateResponse(v.Errors, false))
+		return
+	}
+
+	// generate token
+	token, err := u.service.User.GenerateToken(req.Email, req.Password)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	// return generated token
+	c.JSON(http.StatusOK, helpers.GenerateResponse(map[string]interface{}{
+		"token": token,
+	}, false))
 }
