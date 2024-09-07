@@ -83,5 +83,5 @@ func (u *UserHandler) SignIn(c *gin.Context) {
 	// return generated token
 	c.JSON(http.StatusOK, helpers.GenerateResponse(map[string]interface{}{
 		"token": token,
-	}, false))
+	}, true))
 }
