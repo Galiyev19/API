@@ -1,8 +1,0 @@
-{   
-    "store_driver_postgres": "postgres",
-    "store_driver_sqlite": "sqlite3",
-    "store_path": "./internal/data/data.db",
-    "migration_path": "./migration/migration.sql",
-    "enviroment": "development",
-    "version": "1.0.0"
-}
