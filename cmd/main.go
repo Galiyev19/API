@@ -1,18 +1,24 @@
 package main
 
 import (
-	api "API"
+	api "API/pkg/apiserver"
 	"API/pkg/handler"
 	"API/pkg/repository"
 	"API/pkg/service"
+	"API/pkg/store"
 	"log"
-
-	"github.com/spf13/viper"
 )
 
 func main() {
-	if err := InitConfig(); err != nil {
-		log.Fatalf("error initializing configs: %s", err.Error())
+	config, err := api.InitConfig()
+	if err != nil {
+		log.Fatalf("error initializing config: %s", err)
+	}
+
+	st := store.NewStore()
+	err = st.Open(config.DataBaseURL)
+	if err != nil {
+		log.Fatalf("error initializing config: %s", err)
 	}
 
 	repos := repository.NewRepository()      // repos
@@ -20,13 +26,7 @@ func main() {
 	handlers := handler.NewHandler(services) // handlers
 
 	srv := new(api.Server)
-	if err := srv.Run(viper.GetString("8000"), handlers.InitRoutes()); err != nil {
+	if err := srv.Run(config.BindAddr, handlers.InitRoutes()); err != nil {
 		log.Fatalf("error occured  while running http server: %s", err.Error())
 	}
-}
-
-func InitConfig() error {
-	viper.AddConfigPath("configs")
-	viper.SetConfigName("config")
-	return viper.ReadInConfig()
 }

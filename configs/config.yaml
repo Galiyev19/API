@@ -1,0 +1,2 @@
+port: "8080"
+data_base_url: "user=postgres password=password123 dbname=restapi_dev sslmode=disable"

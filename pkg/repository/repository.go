@@ -1,10 +1,8 @@
 package repository
 
-type Authorization interface {
-}
+type Authorization interface {}
 
-type Users interface {
-}
+type Users interface {}
 
 type Repository struct {
 	Authorization
