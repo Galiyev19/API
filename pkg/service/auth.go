@@ -41,6 +41,16 @@ func (s *AuthService) CreateAdmin(admin models.Admin) (int, error) {
 	return s.repo.CreateAdmin(admin)
 }
 
+func (s *AuthService) CreateUser(user models.User) (int, error) {
+	hashPassword, err := s.generateHashPassword(user.Password)
+	if err != nil {
+		return 0, err
+	}
+	user.Password = hashPassword
+	user.CreatedAt = time.Now()
+	return s.repo.InsertUser(user)
+}
+
 func (s *AuthService) generateHashPassword(password string) (string, error) {
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {

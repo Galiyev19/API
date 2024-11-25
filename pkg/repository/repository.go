@@ -9,6 +9,7 @@ import (
 type Authorization interface {
 	CreateAdmin(admin models.Admin) (int, error)
 	GetAdmin(email string) (models.Admin, error)
+	InsertUser(user models.User) (int, error)
 }
 
 type Users interface{}

@@ -41,6 +41,15 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			users.PUT("/:id", h.updateUser)
 			users.DELETE("/:id", h.deleteUser)
 		}
+
+		products := api.Group("/products")
+		{
+			products.POST("/", h.CreateProduct)
+			products.GET("/", h.GetProducts)
+			products.GET("/:id")
+			products.PUT("/:id")
+			products.DELETE("/:id")
+		}
 	}
 
 	return router
