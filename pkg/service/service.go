@@ -1,12 +1,17 @@
 package service
 
-import "API/pkg/repository"
+import (
+	"API/pkg/models"
+	"API/pkg/repository"
+)
 
 type Authorization interface {
+	CreateAdmin(admin models.Admin) (int, error)
+	GenerateToken(email, password string) (string, error)
+	ParseToken(token string) (int64, error)
 }
 
-type Users interface {
-}
+type Users interface{}
 
 type Service struct {
 	Authorization
@@ -14,5 +19,7 @@ type Service struct {
 }
 
 func NewService(repo *repository.Repository) *Service {
-	return &Service{}
+	return &Service{
+		Authorization: NewAuthService(repo.Authorization),
+	}
 }
