@@ -1,9 +1,11 @@
 package handler
 
 import (
+	_ "API/docs"
 	"API/pkg/service"
 
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Handler struct {
@@ -16,8 +18,15 @@ func NewHandler(services *service.Service) *Handler {
 	}
 }
 
+// @title API Documentation
+// @version 1.0
+// @description This is a simple API documentation example
+// @host localhost:8080
+// @BasePath /api
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	auth := router.Group("/auth")
 	{

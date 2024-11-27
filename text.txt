@@ -1,1 +1,5 @@
-docker run --name postgres-container -p 5432:5432 -d my-postgres-image
+1)  docker build -t my-postgres-image .
+2) docker run --name postgres-container -p 5432:5432 -d my-postgres-image
+
+БД 
+docker run -d --name postgres-container -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password123 -e POSTGRES_DB=restapi_dev postgres:latest
