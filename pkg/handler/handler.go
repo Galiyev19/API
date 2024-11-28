@@ -5,6 +5,7 @@ import (
 	"API/pkg/service"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
@@ -18,11 +19,6 @@ func NewHandler(services *service.Service) *Handler {
 	}
 }
 
-// @title API Documentation
-// @version 1.0
-// @description This is a simple API documentation example
-// @host localhost:8080
-// @BasePath /api
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
@@ -36,6 +32,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	adminAuth := router.Group("/admin/auth")
 	{
+
 		adminAuth.POST("sign-up", h.adminSignUp)
 		adminAuth.POST("sign-in", h.adminSignIn)
 	}
