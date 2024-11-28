@@ -33,8 +33,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	adminAuth := router.Group("/admin/auth")
 	{
 
-		adminAuth.POST("sign-up", h.adminSignUp)
-		adminAuth.POST("sign-in", h.adminSignIn)
+		adminAuth.POST("/sign-up", h.adminSignUp)
+		// adminAuth.POST("/sign-in", h.adminSignIn)
+		adminAuth.POST("/test", h.TestRoute)
 	}
 
 	api := router.Group("/api", h.userIdentity)

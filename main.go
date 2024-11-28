@@ -10,10 +10,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// @title API Documentation
-// @version 1.0
-// @description This is a simple API documentation example
-// @host localhost:8080
+//	@title			API Documentation
+//	@version		1.0
+//	@description	This is a simple API documentation example
+//	@host			localhost:8080
 
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))

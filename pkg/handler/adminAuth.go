@@ -8,17 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// SignUp Admin
-// @Summary Sign-Up Admin
-// @Description Sign-up Admin and get JWT TOKEN
-// @Tags Admin
-// @Accept json
-// @Produce json
-// @Param admin body models.AdminRequest true "Admin information"
-// @Success 201 {object} models.SuccessResponse
-// @Failure 400 {object} models.Error
-// @Router /admin/auth/sign-up [post]
-
+// @Summary		Test 1
+// @Description	Just a test route to check Swagger generation
+// @Tags			Test
+// @Success		200	{string}	string	"OK"
+// @Router			/admin/auth/sign-up [post]
 func (h *Handler) adminSignUp(c *gin.Context) {
 	var input models.AdminRequest
 
@@ -55,17 +49,6 @@ func (h *Handler) adminSignUp(c *gin.Context) {
 	})
 }
 
-// SignUp Admin
-// @Summary Sign-In Admin
-// @Description Sign-In Admin and get JWT TOKEN
-// @Tags Admin
-// @Accept json
-// @Produce json
-// @Param admin body models.AdminRequest true "Admin information"
-// @Success 201 {object} models.SuccessResponse
-// @Failure 400 {object} models.Error
-// @Router /admin/auth/sign-in [post]
-
 func (h *Handler) adminSignIn(c *gin.Context) {
 	var input models.AdminRequest
 
@@ -80,4 +63,13 @@ func (h *Handler) adminSignIn(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"token": token,
 	})
+}
+
+// @Summary		Test route
+// @Description	Just a test route to check Swagger generation
+// @Tags			Test
+// @Success		200	{string}	string	"OK"
+// @Router			/test [get]
+func (h *Handler) TestRoute(c *gin.Context) {
+	c.JSON(http.StatusOK, "OK")
 }

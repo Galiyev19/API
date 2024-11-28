@@ -14,7 +14,42 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/admin/auth/sign-up": {
+            "post": {
+                "description": "Just a test route to check Swagger generation",
+                "tags": [
+                    "Test"
+                ],
+                "summary": "Test 1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/test": {
+            "get": {
+                "description": "Just a test route to check Swagger generation",
+                "tags": [
+                    "Test"
+                ],
+                "summary": "Test route",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it

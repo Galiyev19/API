@@ -4,5 +4,27 @@ info:
   description: This is a simple API documentation example
   title: API Documentation
   version: "1.0"
-paths: {}
+paths:
+  /admin/auth/sign-up:
+    post:
+      description: Just a test route to check Swagger generation
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Test 1
+      tags:
+      - Test
+  /test:
+    get:
+      description: Just a test route to check Swagger generation
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Test route
+      tags:
+      - Test
 swagger: "2.0"
