@@ -17,7 +17,7 @@ import (
 // @Param admin body models.AdminRequest true "Admin information"
 // @Success 201 {object} models.SuccessResponse
 // @Failure 400 {object} models.Error
-// @Router /api/v1/admin/auth/sign-up [post]
+// @Router /admin/auth/sign-up [post]
 
 func (h *Handler) adminSignUp(c *gin.Context) {
 	var input models.AdminRequest
@@ -64,7 +64,7 @@ func (h *Handler) adminSignUp(c *gin.Context) {
 // @Param admin body models.AdminRequest true "Admin information"
 // @Success 201 {object} models.SuccessResponse
 // @Failure 400 {object} models.Error
-// @Router /api/v1/admin/auth/sign-in [post]
+// @Router /admin/auth/sign-in [post]
 
 func (h *Handler) adminSignIn(c *gin.Context) {
 	var input models.AdminRequest
