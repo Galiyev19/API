@@ -1,15 +1,16 @@
+
 CREATE TABLE admins (
-    id bigserial not null primary key,
-    email varchar(255) not null unique,
-    encrypted_password varchar(255) not null,
-    created_at timestamp not null,
-    role varchar(255) not null
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    encrypted_password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+
 );
 
 CREATE TABLE users (
-    id bigserial not null primary key,
-    username varchar(255) not null,
-    email varchar(255) not null unique,
-    encrypted_password varchar(255) not null,
-    created_at timestamp not null
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    encrypted_password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL
 );

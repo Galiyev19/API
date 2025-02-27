@@ -15,13 +15,13 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/auth/sign-up": {
+        "/admin/auth/sign-in": {
             "post": {
                 "description": "Just a test route to check Swagger generation",
                 "tags": [
                     "Test"
                 ],
-                "summary": "Test 1",
+                "summary": "admin sign-in",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -32,8 +32,63 @@ const docTemplate = `{
                 }
             }
         },
-        "/test": {
-            "get": {
+        "/admin/auth/sign-up": {
+            "post": {
+                "description": "Just a test route to check Swagger generation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "admin sign-up",
+                "parameters": [
+                    {
+                        "description": "Admin credentials",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AdminRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "token",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/auth/test": {
+            "post": {
                 "description": "Just a test route to check Swagger generation",
                 "tags": [
                     "Test"
@@ -46,6 +101,23 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.AdminRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
             }
         }

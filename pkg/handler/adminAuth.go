@@ -8,12 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary		Test 1
+// @Summary		admin sign-up
 // @Description	Just a test route to check Swagger generation
-// @Tags			Test
-// @Success		200	{string}	string	"OK"
-// @Router			/admin/auth/sign-up [post]
-func (h *Handler) adminSignUp(c *gin.Context) {
+// @Tags		Admin
+// @Accept 		json
+// @Produce 	json
+// @Param		input	body	models.AdminRequest	true	"Admin credentials"
+// @Success		200		{object}	map[string]string	"token"
+// @Failure		400		{object}	map[string]string	"Bad Request"
+// @Failure		500		{object}	map[string]string	"Internal Server Error"
+// @Router		/admin/auth/sign-up [post]
+func (h *Handler) AdminSignUp(c *gin.Context) {
 	var input models.AdminRequest
 
 	if err := c.BindJSON(&input); err != nil {
@@ -49,7 +54,12 @@ func (h *Handler) adminSignUp(c *gin.Context) {
 	})
 }
 
-func (h *Handler) adminSignIn(c *gin.Context) {
+// @Summary		admin sign-in
+// @Description	Just a test route to check Swagger generation
+// @Tags			Test
+// @Success		200	{string}	string	"OK"
+// @Router			/admin/auth/sign-in [post]
+func (h *Handler) AdminSignIn(c *gin.Context) {
 	var input models.AdminRequest
 
 	if err := c.BindJSON(&input); err != nil {
@@ -69,7 +79,7 @@ func (h *Handler) adminSignIn(c *gin.Context) {
 // @Description	Just a test route to check Swagger generation
 // @Tags			Test
 // @Success		200	{string}	string	"OK"
-// @Router			/test [get]
+// @Router			/admin/auth/test [post]
 func (h *Handler) TestRoute(c *gin.Context) {
 	c.JSON(http.StatusOK, "OK")
 }

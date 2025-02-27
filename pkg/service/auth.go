@@ -36,8 +36,10 @@ func (s *AuthService) CreateAdmin(admin models.Admin) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+
 	admin.Password = hashPassword
 	admin.CreatedAt = time.Now()
+
 	return s.repo.CreateAdmin(admin)
 }
 
@@ -66,7 +68,6 @@ func (s *AuthService) GenerateToken(email, password string) (string, error) {
 		return "", err
 	}
 
-	fmt.Println("admin", admin.Password)
 	err = bcrypt.CompareHashAndPassword([]byte(admin.Password), []byte(password))
 	if err != nil {
 		return "", err

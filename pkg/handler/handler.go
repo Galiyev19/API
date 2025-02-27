@@ -33,8 +33,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	adminAuth := router.Group("/admin/auth")
 	{
 
-		adminAuth.POST("/sign-up", h.adminSignUp)
-		// adminAuth.POST("/sign-in", h.adminSignIn)
+		adminAuth.POST("/sign-up", h.AdminSignUp)
+		adminAuth.POST("/sign-in", h.AdminSignIn)
 		adminAuth.POST("/test", h.TestRoute)
 	}
 

@@ -6,6 +6,7 @@ import (
 	"API/pkg/repository"
 	"API/pkg/service"
 	"API/pkg/store"
+	"fmt"
 
 	"github.com/sirupsen/logrus"
 )
@@ -27,6 +28,9 @@ func main() {
 	if err != nil {
 		logrus.Fatalf("error initializing config: %s", err)
 	}
+
+	fmt.Println(config.DataBaseURL)
+
 	repos := repository.NewRepository(db)    // repos
 	services := service.NewService(repos)    // services
 	handlers := handler.NewHandler(services) // handlers

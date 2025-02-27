@@ -18,7 +18,7 @@ func NewAuthPostgres(db *sql.DB) *AuthPostgres {
 
 func (r *AuthPostgres) CreateAdmin(admin models.Admin) (int, error) {
 	var id int
-	query := `INSERT INTO admins (email,encrypted_password,created_at,role) VALUES($1, $2, $3, $4) RETURNING id`
+	query := `INSERT INTO admins (id, email, encrypted_password, created_at, role) VALUES(DEFAULT, $1, $2, $3, $4) RETURNING id`
 	row := r.db.QueryRow(query, admin.Email, admin.Password, admin.CreatedAt, admin.Role)
 	if err := row.Scan(&id); err != nil {
 		return 0, err

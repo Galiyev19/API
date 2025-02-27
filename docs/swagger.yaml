@@ -1,3 +1,14 @@
+definitions:
+  models.AdminRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -5,7 +16,7 @@ info:
   title: API Documentation
   version: "1.0"
 paths:
-  /admin/auth/sign-up:
+  /admin/auth/sign-in:
     post:
       description: Just a test route to check Swagger generation
       responses:
@@ -13,11 +24,47 @@ paths:
           description: OK
           schema:
             type: string
-      summary: Test 1
+      summary: admin sign-in
       tags:
       - Test
-  /test:
-    get:
+  /admin/auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: Just a test route to check Swagger generation
+      parameters:
+      - description: Admin credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdminRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: admin sign-up
+      tags:
+      - Admin
+  /admin/auth/test:
+    post:
       description: Just a test route to check Swagger generation
       responses:
         "200":

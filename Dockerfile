@@ -1,10 +1,6 @@
 # Используем официальный образ PostgreSQL
 FROM postgres:latest
 
-# Устанавливаем переменные окружения для PostgreSQL
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PASSWORD=password123
-ENV POSTGRES_DB=restapi_dev
 
 # Копируем файлы миграций в контейнер
 COPY migrations/ /docker-entrypoint-initdb.d/
