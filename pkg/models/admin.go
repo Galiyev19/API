@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Admin struct {
-	ID        int64     `json:"id"`
+	ID        string    `json:"id"`
 	Email     string    `json:"email" binding:"required"`
 	Password  string    `json:"password" binding:"required"`
 	CreatedAt time.Time `json:"created_at"`

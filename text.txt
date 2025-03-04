@@ -1,17 +1,5 @@
-1) docker build -t my_postgres_image .
-2) docker run --name postgres-container -p 5432:5432 -d my-postgres-image
+1)Сначала build Сделать контейнера 
 
+2) docker run --name my_postgres_container --env-file .env -v new_pg_data:/var/lib/postgresql/data -p 5432:5432 -d my_postgres_image
 
-docker run --name my_postgres_container --env-file .env -v pg_data:/var/lib/postgresql/data -d my_postgres_image
-
-
-БД 
-docker run -d --name postgres-container -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password123 -e POSTGRES_DB=restapi_dev postgres:latest
-
-New
-1)Запуск контейнера
-docker run --name postgres-container --env-file .env -v pg_data:/var/lib/postgresql/data -p 5432:5432 -d my_postgres_image
-
-
-2) Подключение к бд postgres
-docker exec -it postgres-container psql -U postgres -d restapi_dev
+3)docker exec -it my_postgres_container psql -U postgres -d restapi_dev

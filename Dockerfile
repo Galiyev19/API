@@ -3,7 +3,7 @@ FROM postgres:latest
 
 
 # Копируем файлы миграций в контейнер
-COPY migrations/ /docker-entrypoint-initdb.d/
+COPY migrations /docker-entrypoint-initdb.d/
 
 # Устанавливаем рабочую директорию (не обязательно, но это может быть полезно для вашего проекта)
 WORKDIR /app

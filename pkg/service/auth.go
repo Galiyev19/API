@@ -18,7 +18,7 @@ const (
 
 type TokenClaims struct {
 	jwt.StandardClaims
-	ID int64 `json:"id"`
+	ID string `json:"id"`
 }
 
 type AuthService struct {
@@ -84,19 +84,22 @@ func (s *AuthService) GenerateToken(email, password string) (string, error) {
 	return token.SignedString([]byte(signKey))
 }
 
-func (s *AuthService) ParseToken(accessToken string) (int64, error) {
+func (s *AuthService) ParseToken(accessToken string) (string, error) {
 	token, err := jwt.ParseWithClaims(accessToken, &TokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid sign method")
 		}
 		return []byte(signKey), nil
 	})
+
 	if err != nil {
-		return 0, err
+		return "", err
 	}
+
 	claims, ok := token.Claims.(*TokenClaims)
+
 	if !ok {
-		return 0, errors.New("token claims are not of type *tokenClaims")
+		return "", errors.New("token claims are not of type *tokenClaims")
 	}
 
 	return claims.ID, nil
