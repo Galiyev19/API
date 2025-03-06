@@ -32,6 +32,16 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 }
 
 func (s *AuthService) CreateAdmin(admin models.Admin) (int, error) {
+	existAdmin, err := s.repo.GetAdmin(admin.Email)
+	if err != nil {
+		fmt.Println("Error", err)
+		return 0, err
+	}
+
+	if existAdmin != nil {
+		return 0, errors.New("admin this email already exist")
+	}
+
 	hashPassword, err := s.generateHashPassword(admin.Password)
 	if err != nil {
 		return 0, err
@@ -48,6 +58,7 @@ func (s *AuthService) CreateUser(user models.User) (int, error) {
 	if err != nil {
 		return 0, err
 	}
+
 	user.Password = hashPassword
 	user.CreatedAt = time.Now()
 	return s.repo.InsertUser(user)
@@ -103,4 +114,8 @@ func (s *AuthService) ParseToken(accessToken string) (string, error) {
 	}
 
 	return claims.ID, nil
+}
+
+func (s *AuthService) GetAdmin(email string) (*models.Admin, error) {
+	return s.repo.GetAdmin(email)
 }

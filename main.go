@@ -15,6 +15,10 @@ import (
 //	@description	This is a simple API documentation example
 //	@host			localhost:8080
 
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 	config, err := api.InitConfig()

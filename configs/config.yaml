@@ -1,2 +1,2 @@
 port: "8080"
-data_base_url: "host=localhost port=5436 user=postgres password=qwerty dbname=rest_api sslmode=disable"
+data_base_url: "host=localhost port=5436 user=postgres password=qwerty dbname=postgres sslmode=disable"

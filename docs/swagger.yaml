@@ -9,6 +9,19 @@ definitions:
     - email
     - password
     type: object
+  models.UserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -18,15 +31,40 @@ info:
 paths:
   /admin/auth/sign-in:
     post:
+      consumes:
+      - application/json
       description: Just a test route to check Swagger generation
+      parameters:
+      - description: Admin credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdminRequest'
+      produces:
+      - application/json
       responses:
         "200":
-          description: OK
+          description: token
           schema:
-            type: string
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
       summary: admin sign-in
       tags:
-      - Test
+      - Admin
   /admin/auth/sign-up:
     post:
       consumes:
@@ -63,15 +101,84 @@ paths:
       summary: admin sign-up
       tags:
       - Admin
-  /admin/auth/test:
+  /api/users/create-user:
     post:
-      description: Just a test route to check Swagger generation
+      consumes:
+      - application/json
+      description: Creates a new user
+      parameters:
+      - description: User credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRequest'
+      produces:
+      - application/json
       responses:
         "200":
-          description: OK
+          description: message
           schema:
-            type: string
-      summary: Test route
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create User
       tags:
-      - Test
+      - Users
+  /api/users/user-list:
+    get:
+      consumes:
+      - application/json
+      description: Get users list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get User List
+      tags:
+      - Users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

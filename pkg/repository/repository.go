@@ -8,11 +8,13 @@ import (
 
 type Authorization interface {
 	CreateAdmin(admin models.Admin) (int, error)
-	GetAdmin(email string) (models.Admin, error)
+	GetAdmin(email string) (*models.Admin, error)
 	InsertUser(user models.User) (int, error)
 }
 
-type Users interface{}
+type Users interface {
+	GetUserList() (*[]models.User, error)
+}
 
 type Repository struct {
 	Authorization
@@ -22,5 +24,6 @@ type Repository struct {
 func NewRepository(db *sql.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		Users:         NewUsersPostgres(db),
 	}
 }
