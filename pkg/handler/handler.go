@@ -53,7 +53,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			users.POST("/create-user", h.createUser)
 			users.GET("/user-list", h.getUsers)
-			users.GET("/:id", h.getUserByID)
+			users.GET("/users/:id", h.getUserByID)
 			users.PUT("/:id", h.updateUser)
 			users.DELETE("/:id", h.deleteUser)
 		}

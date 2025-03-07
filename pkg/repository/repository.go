@@ -14,6 +14,8 @@ type Authorization interface {
 
 type Users interface {
 	GetUserList() (*[]models.User, error)
+	GetUserByID(ID int) (*models.User, error)
+	UpdateUser(user models.User, ID int) error
 }
 
 type Repository struct {

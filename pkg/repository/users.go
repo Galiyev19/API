@@ -3,7 +3,7 @@ package repository
 import (
 	"API/pkg/models"
 	"database/sql"
-	"fmt"
+	"errors"
 )
 
 type UsersPostgres struct {
@@ -34,6 +34,28 @@ func (r *UsersPostgres) GetUserList() (*[]models.User, error) {
 		users = append(users, user)
 	}
 
-	fmt.Println("Users from DB:", users) // Проверяем, что данные есть
 	return &users, nil
+}
+
+func (r *UsersPostgres) GetUserByID(ID int) (*models.User, error) {
+	var user models.User
+
+	query := `SELECT id, username, email, encrypted_password, created_at FROM users WHERE id = $1`
+	err := r.db.QueryRow(query, ID).Scan(&user.ID, &user.UserName, &user.Email, &user.Password, &user.CreatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (r *UsersPostgres) UpdateUser(user models.User, ID int) error {
+	query := `UPDATE users SET username = $1, email = $2, encrypted_password = $3 WHERE id = $4`
+
+	_, err := r.db.Exec(query, user.UserName, user.Email, user.Password, ID)
+	if err != nil {
+		return errors.New("failed to update user: " + err.Error())
+	}
+
+	return nil
 }

@@ -18,3 +18,11 @@ func NewUserService(repo repository.Users) *UserService {
 func (s *UserService) GetListUser() (*[]models.User, error) {
 	return s.repo.GetUserList()
 }
+
+func (s *UserService) GetUserByID(ID int) (*models.User, error) {
+	return s.repo.GetUserByID(ID)
+}
+
+func (s *UserService) UpdateUser(user models.User, ID int) error {
+	return s.repo.UpdateUser(user, ID)
+}

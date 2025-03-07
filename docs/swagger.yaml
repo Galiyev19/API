@@ -9,6 +9,23 @@ definitions:
     - email
     - password
     type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
   models.UserRequest:
     properties:
       email:
@@ -101,6 +118,77 @@ paths:
       summary: admin sign-up
       tags:
       - Admin
+  /api/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get Uset BY ID
+      parameters:
+      - description: user data
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get Uset BY ID
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: Update User BY ID
+      parameters:
+      - description: user data
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update User BY ID
+      tags:
+      - Users
   /api/users/create-user:
     post:
       consumes:

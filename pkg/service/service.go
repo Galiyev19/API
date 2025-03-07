@@ -15,6 +15,8 @@ type Authorization interface {
 
 type Users interface {
 	GetListUser() (*[]models.User, error)
+	GetUserByID(ID int) (*models.User, error)
+	UpdateUser(user models.User, ID int) error
 }
 
 type Products interface{}
