@@ -9,7 +9,7 @@ type Authorization interface {
 	CreateAdmin(admin models.Admin) (int, error)
 	CreateUser(user models.User) (int, error)
 	GenerateToken(email, password string) (string, error)
-	ParseToken(token string) (string, error)
+	ParseToken(token string) (string, string, error)
 	GetAdmin(email string) (*models.Admin, error)
 }
 
